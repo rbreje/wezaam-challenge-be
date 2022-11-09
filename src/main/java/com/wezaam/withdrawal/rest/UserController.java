@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Api
-@RestController
+@RestController(value = "/api")
 public class UserController {
 
     @Autowired
@@ -26,7 +26,7 @@ public class UserController {
     @Autowired
     private ApiResponsesConverter objectsConverter;
 
-    @GetMapping("/find-all-users")
+    @GetMapping("/users")
     public ResponseEntity<List<UserResponse>> findAll() {
         List<User> users = userRepository.findAll();
         List<UserResponse> responses = users.stream()
@@ -35,7 +35,7 @@ public class UserController {
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
-    @GetMapping("/find-user-by-id/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {

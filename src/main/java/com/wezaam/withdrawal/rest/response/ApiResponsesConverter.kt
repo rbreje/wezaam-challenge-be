@@ -2,11 +2,11 @@ package com.wezaam.withdrawal.rest.response
 
 import com.wezaam.withdrawal.model.PaymentMethod
 import com.wezaam.withdrawal.model.User
-import com.wezaam.withdrawal.model.WithdrawalScheduled
+import com.wezaam.withdrawal.model.Withdrawal
 
 class ApiResponsesConverter {
 
-    fun convertFromWithdrawals(withdrawals: List<WithdrawalScheduled>): List<WithdrawalResponse> {
+    fun convertFromWithdrawals(withdrawals: List<Withdrawal>): List<WithdrawalResponse> {
         return withdrawals.map {
             WithdrawalResponse(
                     it.id,

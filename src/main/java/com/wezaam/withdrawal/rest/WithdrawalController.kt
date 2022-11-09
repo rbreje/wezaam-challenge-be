@@ -1,6 +1,6 @@
 package com.wezaam.withdrawal.rest
 
-import com.wezaam.withdrawal.repository.WithdrawalScheduledRepository
+import com.wezaam.withdrawal.repository.WithdrawalRepository
 import com.wezaam.withdrawal.rest.response.ApiResponsesConverter
 import com.wezaam.withdrawal.rest.response.WithdrawalResponse
 import io.swagger.annotations.Api
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 @Api
 @RestController(value = "/api")
 class WithdrawalController(
-        private val withdrawalScheduledRepository: WithdrawalScheduledRepository,
+        private val withdrawalScheduledRepository: WithdrawalRepository,
         private val apiResponsesConverter: ApiResponsesConverter
 ) {
 

@@ -1,11 +1,9 @@
 package com.wezaam.withdrawal.rest;
 
 import com.wezaam.withdrawal.model.Withdrawal;
-import com.wezaam.withdrawal.model.WithdrawalScheduled;
 import com.wezaam.withdrawal.model.WithdrawalStatus;
 import com.wezaam.withdrawal.repository.PaymentMethodRepository;
 import com.wezaam.withdrawal.repository.WithdrawalRepository;
-import com.wezaam.withdrawal.repository.WithdrawalScheduledRepository;
 import com.wezaam.withdrawal.service.WithdrawalService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +59,7 @@ public class OldWithdrawalController {
             withdrawalService.create(withdrawal);
             body = withdrawal;
         } else {
-            WithdrawalScheduled withdrawalScheduled = new WithdrawalScheduled();
+            Withdrawal withdrawalScheduled = new Withdrawal();
             withdrawalScheduled.setUserId(Long.parseLong(userId));
             withdrawalScheduled.setPaymentMethodId(Long.parseLong(paymentMethodId));
             withdrawalScheduled.setAmount(Double.parseDouble(amount));
@@ -78,7 +76,7 @@ public class OldWithdrawalController {
     @GetMapping("/find-all-withdrawals")
     public ResponseEntity findAll() {
         List<Withdrawal> withdrawals = context.getBean(WithdrawalRepository.class).findAll();
-        List<WithdrawalScheduled> withdrawalsScheduled = context.getBean(WithdrawalScheduledRepository.class).findAll();
+        List<Withdrawal> withdrawalsScheduled = context.getBean(WithdrawalRepository.class).findAll();
         List<Object> result = new ArrayList<>();
         result.addAll(withdrawals);
         result.addAll(withdrawalsScheduled);

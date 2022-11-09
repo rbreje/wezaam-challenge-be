@@ -10,7 +10,6 @@ import java.time.Instant;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity(name = "withdrawals")
-@Deprecated
 public class Withdrawal {
 
     @Id
@@ -19,6 +18,7 @@ public class Withdrawal {
     private Long transactionId;
     private Double amount;
     private Instant createdAt;
+    private Instant executeAt;
     private Long userId;
     private Long paymentMethodId;
     @Enumerated(EnumType.STRING)
@@ -38,6 +38,14 @@ public class Withdrawal {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public Instant getExecuteAt() {
+        return executeAt;
+    }
+
+    public void setExecuteAt(Instant executeAt) {
+        this.executeAt = executeAt;
     }
 
     public Long getUserId() {
