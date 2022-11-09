@@ -2,7 +2,7 @@ package com.wezaam.withdrawal.rest;
 
 import com.wezaam.withdrawal.model.User;
 import com.wezaam.withdrawal.repository.UserRepository;
-import com.wezaam.withdrawal.rest.response.ApiResponsesConverter;
+import com.wezaam.withdrawal.rest.response.ApiResponseConverter;
 import com.wezaam.withdrawal.rest.response.UserResponse;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +17,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Api
-@RestController(value = "/api")
+@RestController
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private ApiResponsesConverter objectsConverter;
+    private ApiResponseConverter objectsConverter;
 
     @GetMapping("/users")
     public ResponseEntity<List<UserResponse>> findAll() {
