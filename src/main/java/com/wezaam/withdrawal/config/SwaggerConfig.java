@@ -1,5 +1,6 @@
 package com.wezaam.withdrawal.config;
 
+import com.wezaam.withdrawal.rest.response.ApiResponsesConverter;
 import io.swagger.annotations.Api;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,5 +29,10 @@ public class SwaggerConfig {
     public ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("Withdrawal service")
                 .build();
+    }
+
+    @Bean
+    public ApiResponsesConverter getObjectsConverter() {
+        return new ApiResponsesConverter();
     }
 }
