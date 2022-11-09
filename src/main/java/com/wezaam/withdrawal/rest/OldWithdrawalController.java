@@ -23,7 +23,8 @@ import java.util.List;
 
 @Api
 @RestController
-public class WithdrawalController {
+@Deprecated
+public class OldWithdrawalController {
 
     @Autowired
     private ApplicationContext context;

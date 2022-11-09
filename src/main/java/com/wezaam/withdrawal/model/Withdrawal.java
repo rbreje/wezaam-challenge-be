@@ -10,6 +10,7 @@ import java.time.Instant;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity(name = "withdrawals")
+@Deprecated
 public class Withdrawal {
 
     @Id

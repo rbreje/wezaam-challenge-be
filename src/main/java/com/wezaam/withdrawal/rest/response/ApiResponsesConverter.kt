@@ -2,14 +2,23 @@ package com.wezaam.withdrawal.rest.response
 
 import com.wezaam.withdrawal.model.PaymentMethod
 import com.wezaam.withdrawal.model.User
+import com.wezaam.withdrawal.model.WithdrawalScheduled
 
 class ApiResponsesConverter {
 
-    fun convertFromPaymentMethod(paymentMethod: PaymentMethod): PaymentMethodResponse {
-        return PaymentMethodResponse(
-                paymentMethod.id,
-                paymentMethod.name
-        )
+    fun convertFromWithdrawals(withdrawals: List<WithdrawalScheduled>): List<WithdrawalResponse> {
+        return withdrawals.map {
+            WithdrawalResponse(
+                    it.id,
+                    it.transactionId,
+                    it.amount,
+                    it.createdAt,
+                    it.executeAt,
+                    it.userId,
+                    it.paymentMethodId,
+                    it.status
+            )
+        }
     }
 
     fun convertFromUser(user: User): UserResponse {
