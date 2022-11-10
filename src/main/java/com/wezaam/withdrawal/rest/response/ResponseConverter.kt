@@ -30,6 +30,19 @@ class ResponseConverter {
         )
     }
 
+    fun convertFromWithdrawal(withdrawal: Withdrawal): WithdrawalResponse {
+        return WithdrawalResponse(
+                withdrawal.id,
+                withdrawal.transactionId,
+                withdrawal.amount,
+                withdrawal.createdAt,
+                withdrawal.executeAt,
+                withdrawal.userId,
+                withdrawal.paymentMethodId,
+                withdrawal.status
+        )
+    }
+
     private fun convertFromPaymentMethods(paymentMethods: List<PaymentMethod>): List<PaymentMethodResponse> {
         return paymentMethods.map { PaymentMethodResponse(it.id, it.name) };
     }

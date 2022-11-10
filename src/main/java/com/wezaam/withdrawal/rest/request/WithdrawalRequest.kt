@@ -1,11 +1,11 @@
 package com.wezaam.withdrawal.rest.request
 
 import java.time.Instant
-import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 
 data class WithdrawalRequest(
-        @NotBlank(message = "The user ID is missing.") val userId: Long,
-        @NotBlank(message = "The payment method ID is missing.") val paymentMethodId: Long,
-        @NotBlank(message = "The amount is missing.") val amount: Double,
+        @field:NotNull(message = "The user ID is missing.") val userId: Long,
+        @field:NotNull(message = "The payment method ID is missing.") val paymentMethodId: Long,
+        @field:NotNull(message = "The amount is missing.") val amount: Double,
         val executeAt: Instant
 )

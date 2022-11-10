@@ -1,6 +1,5 @@
 package com.wezaam.withdrawal.rest;
 
-import com.wezaam.withdrawal.exception.UserNotFoundException;
 import com.wezaam.withdrawal.model.User;
 import com.wezaam.withdrawal.rest.response.ResponseConverter;
 import com.wezaam.withdrawal.rest.response.UserResponse;
@@ -37,13 +36,8 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
-        try {
-            User user = userService.findById(id);
-            UserResponse response = responseConverter.convertFromUser(user);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.notFound()
-                                 .build();
-        }
+        User user = userService.findById(id);
+        UserResponse response = responseConverter.convertFromUser(user);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
