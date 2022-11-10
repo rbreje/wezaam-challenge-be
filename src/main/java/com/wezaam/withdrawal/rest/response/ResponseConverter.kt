@@ -4,7 +4,7 @@ import com.wezaam.withdrawal.model.PaymentMethod
 import com.wezaam.withdrawal.model.User
 import com.wezaam.withdrawal.model.Withdrawal
 
-class ApiResponseConverter {
+class ResponseConverter {
 
     fun convertFromWithdrawals(withdrawals: List<Withdrawal>): List<WithdrawalResponse> {
         return withdrawals.map {

@@ -2,8 +2,9 @@ package com.wezaam.withdrawal.rest
 
 import com.wezaam.withdrawal.repository.WithdrawalRepository
 import com.wezaam.withdrawal.rest.request.WithdrawalRequest
-import com.wezaam.withdrawal.rest.response.ApiResponseConverter
+import com.wezaam.withdrawal.rest.response.ResponseConverter
 import com.wezaam.withdrawal.rest.response.WithdrawalResponse
+import com.wezaam.withdrawal.service.WithdrawalService
 import io.swagger.annotations.Api
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,7 +17,8 @@ import javax.validation.Valid
 @RestController
 class WithdrawalController(
         private val withdrawalScheduledRepository: WithdrawalRepository,
-        private val apiResponsesConverter: ApiResponseConverter
+        private val apiResponsesConverter: ResponseConverter,
+        private val withdrawalService: WithdrawalService
 ) {
 
     @GetMapping("/withdrawals")
@@ -26,7 +28,7 @@ class WithdrawalController(
 
     @PostMapping("/withdrawals")
     fun create(@Valid @RequestBody withdrawalRequest: WithdrawalRequest): ResponseEntity<WithdrawalResponse> {
-
+        // FIXME add validation
 
 
         return ResponseEntity.badRequest().build()

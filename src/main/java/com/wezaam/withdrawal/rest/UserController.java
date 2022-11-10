@@ -1,9 +1,10 @@
 package com.wezaam.withdrawal.rest;
 
+import com.wezaam.withdrawal.exception.UserNotFoundException;
 import com.wezaam.withdrawal.model.User;
-import com.wezaam.withdrawal.repository.UserRepository;
-import com.wezaam.withdrawal.rest.response.ApiResponseConverter;
+import com.wezaam.withdrawal.rest.response.ResponseConverter;
 import com.wezaam.withdrawal.rest.response.UserResponse;
+import com.wezaam.withdrawal.service.UserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Api
@@ -21,28 +21,29 @@ import java.util.stream.Collectors;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    private ApiResponseConverter objectsConverter;
+    private ResponseConverter responseConverter;
 
     @GetMapping("/users")
     public ResponseEntity<List<UserResponse>> findAll() {
-        List<User> users = userRepository.findAll();
+        List<User> users = userService.findAll();
         List<UserResponse> responses = users.stream()
-                                            .map(user -> objectsConverter.convertFromUser(user))
+                                            .map(user -> responseConverter.convertFromUser(user))
                                             .collect(Collectors.toList());
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
     public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
-        Optional<User> user = userRepository.findById(id);
-        if (user.isPresent()) {
-            UserResponse response = objectsConverter.convertFromUser(user.get());
+        try {
+            User user = userService.findById(id);
+            UserResponse response = responseConverter.convertFromUser(user);
             return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.notFound()
+                                 .build();
         }
-        return ResponseEntity.notFound()
-                             .build();
     }
 }
