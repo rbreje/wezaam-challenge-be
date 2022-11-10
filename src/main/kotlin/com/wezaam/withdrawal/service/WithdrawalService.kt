@@ -1,11 +1,7 @@
 package com.wezaam.withdrawal.service
 
-import com.wezaam.withdrawal.exception.PaymentMethodNotFoundException
-import com.wezaam.withdrawal.exception.UserNotFoundException
 import com.wezaam.withdrawal.model.Withdrawal
 import com.wezaam.withdrawal.model.WithdrawalStatus
-import com.wezaam.withdrawal.repository.PaymentMethodRepository
-import com.wezaam.withdrawal.repository.UserRepository
 import com.wezaam.withdrawal.repository.WithdrawalRepository
 import org.springframework.stereotype.Service
 import java.time.Instant
@@ -13,8 +9,8 @@ import java.time.Instant
 @Service
 class WithdrawalService(
         private val withdrawalRepository: WithdrawalRepository,
-        private val userRepository: UserRepository,
-        private val paymentMethodRepository: PaymentMethodRepository
+        private val userService: UserService,
+        private val paymentMethodService: PaymentMethodService
 ) {
 
     fun findAll(): List<Withdrawal> {
@@ -22,8 +18,8 @@ class WithdrawalService(
     }
 
     fun create(withdrawal: Withdrawal): Withdrawal {
-        userRepository.findById(withdrawal.userId).orElseThrow { throw UserNotFoundException(withdrawal.userId.toString()) }
-        paymentMethodRepository.findById(withdrawal.paymentMethodId).orElseThrow { throw PaymentMethodNotFoundException(withdrawal.paymentMethodId.toString()) }
+        userService.findById(withdrawal.userId)
+        paymentMethodService.findById(withdrawal.paymentMethodId)
         withdrawal.status = WithdrawalStatus.PENDING
         return save(withdrawal)
     }
@@ -33,6 +29,6 @@ class WithdrawalService(
     }
 
     fun findAllByExecuteAtBeforeNow(): List<Withdrawal> {
-        return withdrawalRepository.findAllByExecuteAtBefore(Instant.now());
+        return withdrawalRepository.findAllByExecuteAtBefore(Instant.now())
     }
 }
