@@ -8,7 +8,7 @@ class RequestConverter {
     fun convertFromWithdrawalRequest(withdrawalRequest: WithdrawalRequest): Withdrawal {
         val withdrawal = Withdrawal()
         withdrawal.userId = withdrawalRequest.userId
-        withdrawal.paymentMethodId = withdrawal.paymentMethodId
+        withdrawal.paymentMethodId = withdrawalRequest.paymentMethodId
         withdrawal.amount = withdrawalRequest.amount
         withdrawal.createdAt = Instant.now()
         withdrawal.executeAt = if ("ASAP".equals(withdrawalRequest.executeAt)) Instant.now() else withdrawalRequest.executeAt

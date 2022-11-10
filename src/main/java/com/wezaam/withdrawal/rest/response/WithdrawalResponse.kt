@@ -5,7 +5,7 @@ import java.time.Instant
 
 data class WithdrawalResponse(
         val id: Long,
-        val transactionId: Long,
+        val transactionId: Long?,
         val amount: Double,
         val createAt: Instant,
         val executeAt: Instant,

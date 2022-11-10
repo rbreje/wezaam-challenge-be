@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 @Component
-class WithdrawalProcessor(
+class WithdrawalExecutor(
         private val withdrawalService: WithdrawalService,
         private val paymentMethodService: PaymentMethodService,
         private val withdrawalProcessingService: WithdrawalProcessingService,
@@ -33,7 +33,7 @@ class WithdrawalProcessor(
             } catch (e: Exception) {
                 if (e is TransactionException) withdrawal.status = WithdrawalStatus.FAILED else withdrawal.status = WithdrawalStatus.INTERNAL_ERROR
             } finally {
-                val savedWithdrawal = withdrawalService.create(withdrawal)
+                val savedWithdrawal = withdrawalService.save(withdrawal)
                 eventsService.send(savedWithdrawal)
             }
         }
