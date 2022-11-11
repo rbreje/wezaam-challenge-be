@@ -1,23 +1,39 @@
 package com.wezaam.withdrawal.rest
 
 import com.ninjasquad.springmockk.MockkBean
+import com.wezaam.withdrawal.config.SwaggerConfig
 import com.wezaam.withdrawal.model.Withdrawal
+import com.wezaam.withdrawal.model.WithdrawalStatus
+import com.wezaam.withdrawal.rest.request.RequestConverter
+import com.wezaam.withdrawal.rest.response.ResponseConverter
+import com.wezaam.withdrawal.service.UserService
 import com.wezaam.withdrawal.service.WithdrawalService
 import io.mockk.every
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import java.time.Instant
 
-@WebMvcTest
-class WithdrawalTest(@Autowired val mockMvc: MockMvc) {
+@Import(SwaggerConfig::class)
+@WebMvcTest(WithdrawalController::class)
+class WithdrawalControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @MockkBean
     lateinit var withdrawalService: WithdrawalService
+
+    @MockkBean
+    lateinit var userService: UserService
+
+    @Autowired
+    lateinit var responseConverter: ResponseConverter
+
+    @MockkBean
+    lateinit var requestConverter: RequestConverter
 
     var withdrawal: Withdrawal = initWithdrawal()
 
@@ -30,6 +46,7 @@ class WithdrawalTest(@Autowired val mockMvc: MockMvc) {
         withdrawal.executeAt = Instant.now()
         withdrawal.userId = 1
         withdrawal.paymentMethodId = 1
+        withdrawal.status = WithdrawalStatus.PENDING
         return withdrawal
     }
 
@@ -40,6 +57,6 @@ class WithdrawalTest(@Autowired val mockMvc: MockMvc) {
         mockMvc.perform(get("/withdrawals"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.transactionId").value(21525))
+            .andExpect(jsonPath("[0].transactionId").value(21525))
     }
 }
