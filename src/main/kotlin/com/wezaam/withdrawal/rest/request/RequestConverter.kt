@@ -11,7 +11,8 @@ class RequestConverter {
         withdrawal.paymentMethodId = withdrawalRequest.paymentMethodId
         withdrawal.amount = withdrawalRequest.amount
         withdrawal.createdAt = Instant.now()
-        withdrawal.executeAt = if ("ASAP".equals(withdrawalRequest.executeAt)) Instant.now() else withdrawalRequest.executeAt
+        withdrawal.executeAt =
+            if ("ASAP" == withdrawalRequest.executeAt) Instant.now() else Instant.parse(withdrawalRequest.executeAt)
         return withdrawal
     }
 
