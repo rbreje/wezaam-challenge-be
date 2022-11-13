@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class PaymentMethodService(
-        private val paymentMethodRepository: PaymentMethodRepository
+    private val paymentMethodRepository: PaymentMethodRepository
 ) {
 
     fun findById(id: Long): PaymentMethod {

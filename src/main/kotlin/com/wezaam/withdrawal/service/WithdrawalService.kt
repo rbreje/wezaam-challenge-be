@@ -1,5 +1,6 @@
 package com.wezaam.withdrawal.service
 
+import com.wezaam.withdrawal.exception.WithdrawalNotFoundException
 import com.wezaam.withdrawal.model.Withdrawal
 import com.wezaam.withdrawal.model.WithdrawalStatus
 import com.wezaam.withdrawal.repository.WithdrawalRepository
@@ -8,10 +9,14 @@ import java.time.Instant
 
 @Service
 class WithdrawalService(
-        private val withdrawalRepository: WithdrawalRepository,
-        private val userService: UserService,
-        private val paymentMethodService: PaymentMethodService
+    private val withdrawalRepository: WithdrawalRepository,
+    private val userService: UserService,
+    private val paymentMethodService: PaymentMethodService
 ) {
+
+    fun findById(id: Long): Withdrawal {
+        return withdrawalRepository.findById(id).orElseThrow { throw WithdrawalNotFoundException(id.toString()) }
+    }
 
     fun findAll(): List<Withdrawal> {
         return withdrawalRepository.findAll()

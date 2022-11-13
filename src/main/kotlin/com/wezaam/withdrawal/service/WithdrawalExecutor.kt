@@ -10,10 +10,10 @@ import java.util.concurrent.Executors
 
 @Component
 class WithdrawalExecutor(
-        private val withdrawalService: WithdrawalService,
-        private val paymentMethodService: PaymentMethodService,
-        private val withdrawalProcessingService: WithdrawalProcessingService,
-        private val eventsService: EventsService
+    private val withdrawalService: WithdrawalService,
+    private val paymentMethodService: PaymentMethodService,
+    private val withdrawalProcessingService: WithdrawalProcessingService,
+    private val eventsService: EventsService
 ) {
 
     private val executorService: ExecutorService = Executors.newCachedThreadPool()
@@ -31,7 +31,8 @@ class WithdrawalExecutor(
                 withdrawal.status = WithdrawalStatus.PROCESSING
                 withdrawal.transactionId = transactionId
             } catch (e: Exception) {
-                if (e is TransactionException) withdrawal.status = WithdrawalStatus.FAILED else withdrawal.status = WithdrawalStatus.INTERNAL_ERROR
+                if (e is TransactionException) withdrawal.status = WithdrawalStatus.FAILED else withdrawal.status =
+                    WithdrawalStatus.INTERNAL_ERROR
             } finally {
                 val savedWithdrawal = withdrawalService.save(withdrawal)
                 eventsService.send(savedWithdrawal)

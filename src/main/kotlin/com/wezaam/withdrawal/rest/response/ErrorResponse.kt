@@ -1,7 +1,6 @@
 package com.wezaam.withdrawal.rest.response
 
-class ErrorResponse(
-        var status: Int? = null,
-        var message: String? = null
-) {
-}
+data class ErrorResponse(
+    val status: Int?,
+    val message: String?
+)

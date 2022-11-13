@@ -17,20 +17,20 @@ class ApplicationExceptionHandler : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler
     fun handleUserNotFound(userNotFoundException: UserNotFoundException): ResponseEntity<ErrorResponse> {
-        var errorMessage = ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                userNotFoundException.message
+        val errorMessage = ErrorResponse(
+            HttpStatus.NOT_FOUND.value(),
+            userNotFoundException.message
         )
-        return ResponseEntity(errorMessage, HttpStatus.NOT_FOUND);
+        return ResponseEntity(errorMessage, HttpStatus.NOT_FOUND)
     }
 
     @ExceptionHandler
     fun handlePaymentMethodNotFound(paymentMethodNotFoundException: PaymentMethodNotFoundException): ResponseEntity<ErrorResponse> {
-        var errorMessage = ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                paymentMethodNotFoundException.message
+        val errorMessage = ErrorResponse(
+            HttpStatus.NOT_FOUND.value(),
+            paymentMethodNotFoundException.message
         )
-        return ResponseEntity(errorMessage, HttpStatus.NOT_FOUND);
+        return ResponseEntity(errorMessage, HttpStatus.NOT_FOUND)
     }
 
 }

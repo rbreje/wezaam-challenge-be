@@ -8,18 +8,15 @@ import com.wezaam.withdrawal.service.WithdrawalService
 import io.swagger.annotations.Api
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @Api
 @RestController
 class WithdrawalController(
-        private val responseConverter: ResponseConverter,
-        private val requestConverter: RequestConverter,
-        private val withdrawalService: WithdrawalService
+    private val responseConverter: ResponseConverter,
+    private val requestConverter: RequestConverter,
+    private val withdrawalService: WithdrawalService
 ) {
 
     @GetMapping("/withdrawals")
@@ -27,11 +24,18 @@ class WithdrawalController(
         return ResponseEntity.ok(responseConverter.convertFromWithdrawals(withdrawalService.findAll()))
     }
 
+    @GetMapping("/withdrawals/{id}")
+    fun findById(@PathVariable id: Long): ResponseEntity<WithdrawalResponse> {
+        val withdrawal = withdrawalService.findById(id)
+        val withdrawalResponse = responseConverter.convertFromWithdrawal(withdrawal)
+        return ResponseEntity(withdrawalResponse, HttpStatus.OK)
+    }
+
     @PostMapping("/withdrawals")
     fun create(@Valid @RequestBody withdrawalRequest: WithdrawalRequest): ResponseEntity<WithdrawalResponse> {
         val withdrawal = requestConverter.convertFromWithdrawalRequest(withdrawalRequest)
         val savedWithdrawal = withdrawalService.create(withdrawal)
-        var withdrawalResponse = responseConverter.convertFromWithdrawal(savedWithdrawal);
+        val withdrawalResponse = responseConverter.convertFromWithdrawal(savedWithdrawal)
         return ResponseEntity(withdrawalResponse, HttpStatus.CREATED)
     }
 }

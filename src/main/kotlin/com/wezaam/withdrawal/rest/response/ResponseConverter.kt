@@ -9,41 +9,41 @@ class ResponseConverter {
     fun convertFromWithdrawals(withdrawals: List<Withdrawal>): List<WithdrawalResponse> {
         return withdrawals.map {
             WithdrawalResponse(
-                    it.id,
-                    it.transactionId,
-                    it.amount,
-                    it.createdAt,
-                    it.executeAt,
-                    it.userId,
-                    it.paymentMethodId,
-                    it.status
+                it.id,
+                it.transactionId,
+                it.amount,
+                it.createdAt,
+                it.executeAt,
+                it.userId,
+                it.paymentMethodId,
+                it.status
             )
         }
     }
 
     fun convertFromUser(user: User): UserResponse {
         return UserResponse(
-                user.id,
-                user.firstName,
-                convertFromPaymentMethods(user.paymentMethods),
-                user.maxWithdrawalAmount
+            user.id,
+            user.firstName,
+            convertFromPaymentMethods(user.paymentMethods),
+            user.maxWithdrawalAmount
         )
     }
 
     fun convertFromWithdrawal(withdrawal: Withdrawal): WithdrawalResponse {
         return WithdrawalResponse(
-                withdrawal.id,
-                withdrawal.transactionId,
-                withdrawal.amount,
-                withdrawal.createdAt,
-                withdrawal.executeAt,
-                withdrawal.userId,
-                withdrawal.paymentMethodId,
-                withdrawal.status
+            withdrawal.id,
+            withdrawal.transactionId,
+            withdrawal.amount,
+            withdrawal.createdAt,
+            withdrawal.executeAt,
+            withdrawal.userId,
+            withdrawal.paymentMethodId,
+            withdrawal.status
         )
     }
 
     private fun convertFromPaymentMethods(paymentMethods: List<PaymentMethod>): List<PaymentMethodResponse> {
-        return paymentMethods.map { PaymentMethodResponse(it.id, it.name) };
+        return paymentMethods.map { PaymentMethodResponse(it.id, it.name) }
     }
 }
