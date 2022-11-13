@@ -17,11 +17,8 @@ import kotlin.test.assertTrue
 class WithdrawalServiceTest {
 
     val withdrawalRepositoryMock: WithdrawalRepository = mockk()
-
     val userServiceMock: UserService = mockk()
-
     val paymentMethodServiceMock: PaymentMethodService = mockk()
-
     val withdrawalService: WithdrawalService = WithdrawalService(
         withdrawalRepositoryMock,
         userServiceMock,

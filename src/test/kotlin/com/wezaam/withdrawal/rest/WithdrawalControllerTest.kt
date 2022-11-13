@@ -27,21 +27,21 @@ import java.time.Instant
 class WithdrawalControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @MockkBean
-    lateinit var withdrawalService: WithdrawalService
+    lateinit var withdrawalServiceMock: WithdrawalService
 
     @MockkBean
-    lateinit var userService: UserService
+    lateinit var userServiceMock: UserService
 
     @Autowired
-    lateinit var responseConverter: ResponseConverter
+    lateinit var responseConverterStub: ResponseConverter
 
     @Autowired
-    lateinit var requestConverter: RequestConverter
+    lateinit var requestConverterStub: RequestConverter
 
     @MockkBean
-    lateinit var withdrawalRequest: WithdrawalRequest
+    lateinit var withdrawalRequestMock: WithdrawalRequest
 
-    private val mapper = jacksonObjectMapper()
+    private val mapperStub = jacksonObjectMapper()
 
     fun initWithdrawal(
         id: Long,
@@ -74,7 +74,7 @@ class WithdrawalControllerTest(@Autowired val mockMvc: MockMvc) {
             WithdrawalStatus.PENDING
         )
 
-        every { withdrawalService.findAll() } returns listOf(withdrawalStub)
+        every { withdrawalServiceMock.findAll() } returns listOf(withdrawalStub)
 
         mockMvc.perform(get("/withdrawals"))
             .andExpect(status().isOk)
@@ -84,13 +84,13 @@ class WithdrawalControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun create_whenValidPostRequest_thenReturnedSavedInstanceWithStatus200() {
-        val withdrawalRequest = WithdrawalRequest(1, 1, 24.0, "ASAP")
+        val withdrawalRequestStub = WithdrawalRequest(1, 1, 24.0, "ASAP")
         val createdWithdrawalStub = initWithdrawal(1001, 21525, 24.0, 1, 1, WithdrawalStatus.PENDING)
 
-        every { withdrawalService.create(any()) } returns createdWithdrawalStub
+        every { withdrawalServiceMock.create(any()) } returns createdWithdrawalStub
 
         mockMvc.perform(
-            post("/withdrawals").content(mapper.writeValueAsString(withdrawalRequest)).contentType(
+            post("/withdrawals").content(mapperStub.writeValueAsString(withdrawalRequestStub)).contentType(
                 MediaType.APPLICATION_JSON
             )
         )

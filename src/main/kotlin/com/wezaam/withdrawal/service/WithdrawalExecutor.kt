@@ -16,14 +16,14 @@ class WithdrawalExecutor(
         private val eventsService: EventsService
 ) {
 
-    private val executorService: ExecutorService = Executors.newCachedThreadPool();
+    private val executorService: ExecutorService = Executors.newCachedThreadPool()
 
     @Scheduled(fixedDelay = 5000)
     fun run() {
-        withdrawalService.findAllByExecuteAtBeforeNow().forEach(this::process)
+        withdrawalService.findAllByExecuteAtBeforeNow().forEach(this::execute)
     }
 
-    fun process(withdrawal: Withdrawal) {
+    fun execute(withdrawal: Withdrawal) {
         executorService.submit {
             try {
                 val paymentMethod = paymentMethodService.findById(withdrawal.paymentMethodId)
