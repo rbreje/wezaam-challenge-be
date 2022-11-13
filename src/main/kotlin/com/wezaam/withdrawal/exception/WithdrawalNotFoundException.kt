@@ -1,3 +1,3 @@
 package com.wezaam.withdrawal.exception
 
-class WithdrawalNotFoundException(id: String) : Exception("Withdrawals $id does not exist.")
+class WithdrawalNotFoundException(id: String) : RuntimeException("Withdrawals $id does not exist.")

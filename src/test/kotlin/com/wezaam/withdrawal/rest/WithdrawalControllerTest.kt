@@ -84,7 +84,7 @@ class WithdrawalControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun create_whenValidPostRequest_thenReturnedSavedInstanceWithStatus200() {
-        val withdrawalRequestStub = WithdrawalRequest(1, 1, 24.0, "ASAP")
+        val withdrawalRequestStub = WithdrawalRequest("1", "1", "24.0", null)
         val createdWithdrawalStub = initWithdrawal(1001, 21525, 24.0, 1, 1, WithdrawalStatus.PENDING)
 
         every { withdrawalServiceMock.create(any()) } returns createdWithdrawalStub

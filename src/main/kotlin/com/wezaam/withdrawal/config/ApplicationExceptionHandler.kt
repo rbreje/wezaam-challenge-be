@@ -2,6 +2,8 @@ package com.wezaam.withdrawal.config
 
 import com.wezaam.withdrawal.exception.PaymentMethodNotFoundException
 import com.wezaam.withdrawal.exception.UserNotFoundException
+import com.wezaam.withdrawal.exception.WithdrawalNotFoundException
+import com.wezaam.withdrawal.exception.WithdrawalValidationException
 import com.wezaam.withdrawal.rest.response.ErrorResponse
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
@@ -31,6 +33,24 @@ class ApplicationExceptionHandler : ResponseEntityExceptionHandler() {
             paymentMethodNotFoundException.message
         )
         return ResponseEntity(errorMessage, HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler
+    fun handleWithdrawalNotFound(withdrawalNotFoundException: WithdrawalNotFoundException): ResponseEntity<ErrorResponse> {
+        val errorMessage = ErrorResponse(
+            HttpStatus.NOT_FOUND.value(),
+            withdrawalNotFoundException.message
+        )
+        return ResponseEntity(errorMessage, HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler
+    fun handleWithdrawalValidation(withdrawalValidationException: WithdrawalValidationException): ResponseEntity<ErrorResponse> {
+        val errorMessage = ErrorResponse(
+            HttpStatus.BAD_REQUEST.value(),
+            withdrawalValidationException.message
+        )
+        return ResponseEntity(errorMessage, HttpStatus.BAD_REQUEST)
     }
 
 }
