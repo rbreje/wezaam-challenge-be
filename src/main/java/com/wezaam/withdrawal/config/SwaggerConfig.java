@@ -20,16 +20,16 @@ public class SwaggerConfig {
     @Bean
     public Docket api(ApiInfo apiInfo) {
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo)
-                .select()
-                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
-                .paths(PathSelectors.any())
-                .build();
+                                                      .select()
+                                                      .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
+                                                      .paths(PathSelectors.any())
+                                                      .build();
     }
 
     @Bean
     public ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("Withdrawal service")
-                .build();
+                                   .build();
     }
 
     @Bean

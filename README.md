@@ -30,3 +30,4 @@ Assume we have a big legacy system and one of the parts is withdrawal processing
 
 - Add logging
 - Deploy service to docker
+- Add security
