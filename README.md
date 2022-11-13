@@ -25,3 +25,8 @@ Assume we have a big legacy system and one of the parts is withdrawal processing
 - Implement your nice solution
 - If you need to put comments/description regarding the solution please write them in `SOLUTION.md`  
 - Once complete invite `makcon` and `pbravowezaam` for review
+
+### Personal TODOs
+
+- Add logging
+- Deploy service to docker
