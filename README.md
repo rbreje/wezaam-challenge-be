@@ -29,5 +29,4 @@ Assume we have a big legacy system and one of the parts is withdrawal processing
 ### Personal TODOs
 
 - Add logging
-- Deploy service to docker
 - Add security

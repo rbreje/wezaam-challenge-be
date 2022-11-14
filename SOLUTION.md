@@ -5,7 +5,7 @@
 ## How to Test the API
 
 Start the application and access the following URL
-`http://localhost:7070/swagger-ui/`
+`http://localhost:8080/swagger-ui/`
 
 ## How to Run the Service
 
